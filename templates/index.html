@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mini E-Commerce Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+  <!-- <link rel="stylesheet" href="./style.css" /> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <link rel="stylesheet" href="./app.py" />
+</head>
+<body>
+  <header>
+    <h1>Mini E-Commerce Product Catalog</h1>
+    <p class="subtitle">CRUD • Search • Category Filter (Bonus)</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Add Product -->
+    <section class="card">
+      <h2>Add Product</h2>
+      <form id="addForm">
+        <div class="grid">
+          <label>
+            Name*
+            <input type="text" id="name" required />
+          </label>
+
+          <label>
+            Category
+            <input type="text" id="category" placeholder="e.g., Electronics" />
+          </label>
+
+          <label>
+            Price (₹)*
+            <input type="number" id="price" step="0.01" min="0.01" required />
+          </label>
+
+          <label>
+            Stock Qty*
+            <input type="number" id="stock" min="0" required />
+          </label>
+        </div>
+
+        <label>
+          Description
+          <textarea id="description" rows="2" placeholder="Optional details"></textarea>
+        </label>
+
+        <button type="submit" class="btn primary">Add Product</button>
+        <span id="addMsg" class="msg"></span>
+      </form>
+    </section>
+
+    <!-- Search/Filter -->
+    <section class="card">
+      <h2>Search & Filter</h2>
+      <div class="grid">
+        <input type="text" id="search" placeholder="Search by name/desc/category..." />
+        <input type="text" id="filterCategory" placeholder="Filter by category (exact)" />
+        <select id="sort">
+          <option value="created_at_desc">Newest</option>
+          <option value="name_asc">Name A→Z</option>
+          <option value="name_desc">Name Z→A</option>
+          <option value="price_asc">Price Low→High</option>
+          <option value="price_desc">Price High→Low</option>
+        </select>
+        <button id="btnRefresh" class="btn">Refresh</button>
+      </div>
+    </section>
+
+    <!-- List -->
+    <section class="card">
+      <h2>Products</h2>
+      <div class="table-wrap">
+        <table id="productsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name / Category</th>
+              <th>Description</th>
+              <th class="right">Price (₹)</th>
+              <th class="right">Stock</th>
+              <th class="center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p id="emptyState" class="empty">No products found.</p>
+    </section>
+
+  </main>
+
+  <!-- Edit Modal -->
+  <dialog id="editDialog">
+    <form method="dialog" id="editForm" class="modal">
+      <h3>Edit Product</h3>
+      <input type="hidden" id="editId" />
+      <div class="grid">
+        <label>
+          Name*
+          <input type="text" id="editName" required />
+        </label>
+        <label>
+          Category
+          <input type="text" id="editCategory" />
+        </label>
+        <label>
+          Price (₹)*
+          <input type="number" id="editPrice" step="0.01" min="0.01" required />
+        </label>
+        <label>
+          Stock Qty*
+          <input type="number" id="editStock" min="0" required />
+        </label>
+      </div>
+      <label>
+        Description
+        <textarea id="editDescription" rows="2"></textarea>
+      </label>
+
+      <div class="modal-actions">
+        <button value="cancel" class="btn">Cancel</button>
+        <button id="btnSaveEdit" class="btn primary">Save</button>
+      </div>
+      <span id="editMsg" class="msg"></span>
+    </form>
+  </dialog>
+
+  <footer>
+    <small>Built with Flask + SQLite • For demo use</small>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
